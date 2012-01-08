@@ -1,0 +1,42 @@
+This is a little python library to acess the commandlinefu
+(www.commandlinefu.com) api.
+
+Each query gets you 25 results (at max) so you must handle paginig or you can
+use the iterator to get as many results as you want (careful! each 25 results
+will send a petition again to the commandlinefu website, don't do a for loop
+to get all the results because that can saturate the server, try always to
+paginate them)
+
+An example of usage:
+
+clfu = CLFu() 
+## get the tags fom the website, it gets them from the tagcloud on the main
+## page, so it will fail if the webpage changes :(, but there is no better way
+## yet (if there is please tell me!)
+tags = clfu.get_tabs()
+
+## get the first 25 commands that match the word 'disk'
+cmds = cflu.search('disk')
+
+## get all the commands that were posted during the day
+cmnds = [cmnd for cmnd in cflu.browse_all(timerange='last day')]
+## NOTE: the browse_all and search_all commands are iterators
+
+The available options for each command request method (browse, browse_all,
+search, search_all, using, using_all) are:
+
+ timerange: the timerange to looks the commands into ('anytyme' - default,
+           'last day', 'last week', 'last month'))
+ 
+ sort: How to sort the commands ('date' - default, 'votes')
+
+ form: How the results will be returned ('json' - default, this parses the
+       response and returns a python list, the others return the raw page (to
+       be implemented), 'plain' and 'rss')
+ 
+ page: the page number to start looking from, 0 by default.
+
+
+Enjoy!
+pd: it is used in the clicompanion software
+(https://launchpad.net/clicompanion) for the CommandLineFU plugin.
