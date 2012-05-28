@@ -1,0 +1,11 @@
+#!/usr/bin/env python
+#encoding: utf-8
+
+import executor as ex
+import clfu
+
+if __name__ == '__main__':
+    executor = ex.Executor(clfu.CLFu())
+    print executor.run()
+
+

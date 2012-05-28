@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
-# clfu.py - CommandlineFU API libreries for python
+# clfu.py - CommandlineFU API libraries for python
 #
 # Copyright 2012 David Caro <david.caro.estevez@gmail.com>
 #
@@ -43,8 +43,6 @@ CLFU_API_RANGES = {'anytime': '',
                     'last week': '/last-week',
                     'last month': '/last-month'}
 
-## Not sure hot to use tags, needs the tad-id, but there's no easy way to get
-## it, so not implemented
 CLFU_API_COMMANDS = {'browse': '/browse',
                       'search': '/matching',
                       'tag': '/tagged',
@@ -58,6 +56,7 @@ EMPTY = {'json': [],
          'plain': '',
          'rss': ''}
 
+## set to True to show debug logs
 DEBUG = False
 
 
@@ -72,7 +71,7 @@ class CLFu:
         self.tags = {}
         self.page = 0
 
-    def _send_request(self, command, string='', sort='date',
+    def _request(self, command, string='', sort='date',
                     form='json', timerange='anytime', page=0):
 
         import socket
@@ -113,7 +112,7 @@ class CLFu:
 
     def _send(self, command, string='', sort='date',
               form='json', timerange='anytime', page=0):
-        response = self._send_request(command, string, sort, form,
+        response = self._request(command, string, sort, form,
                                     timerange, page)
         if response:
             if form == 'json':
@@ -137,7 +136,7 @@ class CLFu:
         ## whe check if the response is the same twice, if it is, we stop, to
         ## avoid infinite loops
         while not self._endpage(response, form) and oldresponse != response:
-            response = self._send_request(command, string, sort,
+            response = self._send(command, string, sort,
                                           form, timerange, page)
             oldresponse == response
             if not response:
